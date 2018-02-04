@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
  * @Date: create 2018/1/15
  */
 @SpringBootApplication
-@PropertySource({"okhttpConfig.properties"})
+@PropertySource({"okhttpConfig.properties","activeMQ.properties"})
 @ComponentScan(basePackages = {"com.ancun.webhook","com.ancun.webhook.repository"
         ,"com.ancun.webhook.model", "com.ancun.webhook.service"
         ,"com.ancun.webhook.service.impl"})
