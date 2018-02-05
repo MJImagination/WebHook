@@ -11,6 +11,11 @@ import javax.annotation.Resource;
 import javax.jms.Destination;
 import javax.jms.Queue;
 
+/**
+ * @Description:
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
+ */
 @Component
 public class MQProducer implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(MQProducer.class);

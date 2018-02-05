@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import javax.jms.Destination;
 
 /**
- * 用于定义消息队列
+ * @Description: 用于定义消息队列
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Configuration
 public class QueueConfig {  

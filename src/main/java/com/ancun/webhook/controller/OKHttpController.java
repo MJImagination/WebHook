@@ -1,7 +1,10 @@
 package com.ancun.webhook.controller;
 
+import com.ancun.webhook.okhttp.callBack.PublicityDataCallback;
 import okhttp3.*;
 import okio.Buffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,26 +20,13 @@ import java.net.SocketTimeoutException;
 @Controller
 @RequestMapping(value = "/com/mj/http")
 public class OKHttpController {
+    public static final Logger logger = LoggerFactory.getLogger(OKHttpController.class);
     @Autowired
     private OkHttpClient okHttpClient;
 
     @RequestMapping("/okgo")
     @ResponseBody
-    public String test3() {
-//        Dispatcher dispatcher = new Dispatcher();
-//        dispatcher.setMaxRequests(300);
-//        dispatcher.setMaxRequestsPerHost(200);
-//        OkHttpClient okHttpClient2 = new OkHttpClient.Builder()
-//                .connectTimeout(5000, TimeUnit.MILLISECONDS)
-//                .readTimeout(6000, TimeUnit.MILLISECONDS)
-//                .writeTimeout(10,TimeUnit.SECONDS)
-//                .dispatcher(dispatcher)
-////                .connectionPool(new ConnectionPool(10,5,TimeUnit.SECONDS))
-//                .addInterceptor(new RetryInterceptor())//重试
-//                .build();
-//
-
-
+    public String okgo() {
         String url = "http://localhost:8070/echar/getHistogram";
         for (int j = 0; j < 20; j++) {
             RequestBody body = new FormBody.Builder()
@@ -48,46 +38,8 @@ public class OKHttpController {
                     .build();
             Call call = okHttpClient.newCall(request);
             System.out.println("ThreadId:" + Thread.currentThread().getId() );
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    if (e instanceof SocketTimeoutException) {
-                        System.out.println("超时异常1" + call.request().body().toString());
-//                        ((FormBody) ((RealCall) call).originalRequest.body()).encodedValues.toString();
-                        Buffer buffer = new Buffer();
-                        try {
-                            call.request().body().writeTo(buffer);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        System.out.println(buffer);
-
-                    }
-                    if (e instanceof ConnectException) {
-                        System.out.println("连接异常");
-                        Buffer buffer = new Buffer();
-                        try {
-                            call.request().body().writeTo(buffer);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        System.out.println(buffer);
-
-                    }
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    System.out.println("我是异步线程,线程Id为:" + Thread.currentThread().getId() + "内容：" + response.body().string());
-                }
-            });
-            for (int i = 0; i < 1; i++) {
-                System.out.println("我是主线程,线程Id为:" + Thread.currentThread().getId());
-
-//                    Thread.currentThread().sleep(100);
-            }
+            call.enqueue(new PublicityDataCallback());
         }
-
         return "true";
     }
 

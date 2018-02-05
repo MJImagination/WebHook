@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * @Description:
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
+ */
 @Component
 public class MQConsumer {
   

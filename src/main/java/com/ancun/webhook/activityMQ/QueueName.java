@@ -3,7 +3,7 @@ package com.ancun.webhook.activityMQ;
 /**
  * @Description:
  * @Author: MJ
- * @Date: Created in 2018/1/31
+ * @Date: Created in 2018/2/4
  */
 public class QueueName {
     public static final String First_Queue = "First_Queue";
