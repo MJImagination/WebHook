@@ -60,12 +60,6 @@ public class PublicityDataServiceImpl implements PublicityDataService {
     @Override
     public Page<PublicityData> findPageList(Pageable pageable, PublicityData publicityData, JPATimeVO jpaTimeVO
             , LinkedHashMap<String, String> orders) {
-
-        if (JPAUtil.validJPATimeVO(jpaTimeVO)) {
-            jpaTimeVO.setTimeFiledName(jpaTimeVO.getTimeFiledName());
-            jpaTimeVO.setStartTime(jpaTimeVO.getStartTime());
-            jpaTimeVO.setEndTime(jpaTimeVO.getEndTime());
-        }
         return publicityDataRepository.findAll(JPAUtil.getSpecificationByObj(publicityData, null
                 , jpaTimeVO, orders), pageable);
     }

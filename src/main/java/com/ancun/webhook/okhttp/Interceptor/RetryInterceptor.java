@@ -14,8 +14,8 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 /**
- *
  * 失败重发拦截器
+ *
  * @author MJ
  * @Description:
  * @Date: create 2018/2/4
@@ -53,7 +53,8 @@ public class RetryInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-
+        logger.info("ThreadId = {}",
+                Thread.currentThread().getId());
         RetryWrapper retryWrapper = proceed(chain);
 
         while (retryWrapper.isNeedReTry()) {
@@ -61,11 +62,11 @@ public class RetryInterceptor implements Interceptor {
 
             logger.info("尝试重发 : ThreadId = {} , 第{}次重发 body = {}",
                     Thread.currentThread().getId(),
-                    retryWrapper.retryNum,((FormBody)retryWrapper.request.body()).encodedValue(0));
+                    retryWrapper.retryNum, ((FormBody) retryWrapper.request.body()).encodedValue(0));
             try {
                 Thread.sleep(DELAY + (retryWrapper.retryNum - 1) * INCREASE_DELY);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.info("InterruptedException :{}", e.getMessage());
             }
             proceed(chain, retryWrapper.request, retryWrapper);
         }
@@ -86,14 +87,14 @@ public class RetryInterceptor implements Interceptor {
             Response response = chain.proceed(request);
             retryWrapper.setResponse(response);
         } catch (SocketException e) {
-            //e.printStackTrace();
-        } catch (SocketTimeoutException e){
-            //e.printStackTrace();
+//            logger.info("proceed SocketException {}",e.getMessage());
+        } catch (SocketTimeoutException e) {
+//            logger.info("proceed SocketTimeoutException {}",e.getMessage());
         }
     }
 
     static class RetryWrapper {
-        volatile int retryNum = 0;//假如设置为3次重试的话，则最大可能请求5次（默认1次+3次重试 + 最后一次默认）
+        volatile int retryNum = 0;
         Request request;
         Response response;
         private int maxRetry;
@@ -115,10 +116,19 @@ public class RetryInterceptor implements Interceptor {
             return this.request;
         }
 
+        /**
+         * 判断是否成功
+         *
+         * @return
+         */
         public boolean isSuccessful() {
             return response != null && response.isSuccessful();
         }
 
+        /**
+         * 是否需要重发
+         * @return
+         */
         public boolean isNeedReTry() {
             return !isSuccessful() && retryNum < maxRetry;
         }
