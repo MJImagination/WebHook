@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/15
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Entity
 @Table(name = "publicity_data")

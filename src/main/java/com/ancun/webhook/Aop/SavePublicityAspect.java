@@ -9,12 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 /**
- *
- * publicity保存切面
- * @author MJ
- * @Description:
- * @Date: create 2018/1/15
+ * @Description: publicity保存切面
+ * @Author: MJ
+ * @Date: Created in 2018/1/15
  */
 @Aspect
 @Component

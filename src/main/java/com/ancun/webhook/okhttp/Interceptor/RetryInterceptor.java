@@ -14,11 +14,9 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 /**
- * 失败重发拦截器
- *
- * @author MJ
- * @Description:
- * @Date: create 2018/2/4
+ * @Description: 失败重发拦截器
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Component
 public class RetryInterceptor implements Interceptor {

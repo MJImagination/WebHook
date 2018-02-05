@@ -3,9 +3,9 @@ package com.ancun.webhook.Aop.Annotation;
 import java.lang.annotation.*;
 
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/15
+ * @Author: MJ
+ * @Date: Created in 2018/1/15
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

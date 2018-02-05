@@ -12,11 +12,9 @@ import org.springframework.context.annotation.Scope;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
- * okhttp配置文件，全局公用一个OkHttpClient
- * @author MJ
- * @Description:
- * @Date: create 2018/2/4
+ * @Description: okhttp配置文件，全局公用一个OkHttpClient
+ * @Author: MJ
+ * @Date: Created in 2018/2/1
  */
 @Configuration
 @Scope("singleton")

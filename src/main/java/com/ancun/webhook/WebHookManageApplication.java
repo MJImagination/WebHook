@@ -7,9 +7,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/15
+ * @Author: MJ
+ * @Date: Created in 2018/1/22
  */
 @SpringBootApplication
 @PropertySource({"classpath:okhttpConfig.properties", "classpath:activeMQ.properties"})

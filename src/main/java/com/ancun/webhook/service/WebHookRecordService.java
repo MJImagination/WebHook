@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.LinkedHashMap;
 
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/5
+ * @Author: MJ
+ * @Date: Created in 2018/2/5
  */
 public interface WebHookRecordService {
     /**

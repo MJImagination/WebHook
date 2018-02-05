@@ -4,12 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-
-
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/15
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Entity
 @Table(name="web_hook")

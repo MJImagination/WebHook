@@ -21,11 +21,10 @@ import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-
 /**
- * @author MJ
  * @Description:
- * @Date: create 2018/1/15
+ * @Author: MJ
+ * @Date: Created in 2018/2/5
  */
 @Controller
 @RequestMapping("/publicityData")

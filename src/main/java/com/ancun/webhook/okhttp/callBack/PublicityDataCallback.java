@@ -13,11 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 自定义callback
- *
- * @author MJ
- * @Description:
- * @Date: create 2018/2/4
+ * @Description: 自定义callback
+ * @Author: MJ
+ * @Date: Created in 2018/2/1
  */
 public class PublicityDataCallback implements Callback {
     public static final Logger logger = LoggerFactory.getLogger(PublicityDataCallback.class);
