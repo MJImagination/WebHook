@@ -5,10 +5,9 @@ import com.ancun.webhook.model.PublicityData;
 import java.util.List;
 
 /**
- * 返回信息
- *
- * @author jarvan
- * @since 2017年12月25日 15:59
+ * @Description:
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 public class RespBodyLayUi<T> {
 

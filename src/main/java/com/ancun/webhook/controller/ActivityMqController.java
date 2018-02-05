@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by ancun on 2017/2/24.
+ * @Description:
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Controller
 @RequestMapping(value = "/mq")

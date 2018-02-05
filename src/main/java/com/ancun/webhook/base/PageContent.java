@@ -1,11 +1,10 @@
 package com.ancun.webhook.base;
 
 /**
- * @author jingke
  * @Description:
- * @Date: create in 19:04 2017/12/25
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
-
 public class PageContent {
 
     private int page = 0;

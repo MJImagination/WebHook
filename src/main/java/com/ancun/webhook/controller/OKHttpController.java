@@ -15,7 +15,9 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 /**
- * Created by ancun on 2018/1/30.
+ * @Description:
+ * @Author: MJ
+ * @Date: Created in 2018/2/4
  */
 @Controller
 @RequestMapping(value = "/com/mj/http")
