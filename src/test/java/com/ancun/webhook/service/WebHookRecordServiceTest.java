@@ -21,7 +21,6 @@ public class WebHookRecordServiceTest extends BaseTest {
     public void createdWebHookRecord() {
         WebHook webHook = new WebHook();
         webHook.setCallBackUrl("fd");
-
         webHookRepository.save(webHook);
     }
 
