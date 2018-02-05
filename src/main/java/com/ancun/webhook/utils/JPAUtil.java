@@ -94,6 +94,12 @@ public class JPAUtil {
         };
     }
 
+    /**
+     * 校验
+     *
+     * @param jpaTimeVO
+     * @return
+     */
     public static boolean validJPATimeVO(JPATimeVO jpaTimeVO){
         if(jpaTimeVO == null){
             return false;
