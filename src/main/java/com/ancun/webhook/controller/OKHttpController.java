@@ -39,7 +39,6 @@ public class OKHttpController {
                     .post(body)
                     .build();
             Call call = okHttpClient.newCall(request);
-            System.out.println("ThreadId:" + Thread.currentThread().getId() );
             call.enqueue(new PublicityDataCallback());
         }
         return "true";

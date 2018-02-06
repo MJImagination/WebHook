@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @Description:
  * @Author: MJ
- * @Date: Created in 2018/1/17
+ * @Date: Created in 2018/2/5
  */
 public class JPATimeVO {
     /**
