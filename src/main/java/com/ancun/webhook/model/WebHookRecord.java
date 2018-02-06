@@ -22,7 +22,7 @@ public class WebHookRecord implements Serializable {
     private Long id;
 
     /**
-     * 用户所属平台id
+     * 接入者id
      */
     @Column(name="partner_id")
     private Integer partnerId;
@@ -40,12 +40,6 @@ public class WebHookRecord implements Serializable {
     private String callBackUrl;
 
     /**
-     * 状态(0-失败 1-成功 )
-     */
-    @Column(name="status")
-    private Integer status;
-
-    /**
      * 请求次数
      */
     @Column(name="call_num")
@@ -56,6 +50,42 @@ public class WebHookRecord implements Serializable {
      */
     @Column(name="call_back_content")
     private String callBackContent;
+
+    /**
+     * 状态(0-失败 1-成功 )
+     */
+    @Column(name = "status")
+    private Integer status;
+
+    /**
+     * 保全号 32位
+     */
+    @Column(name = "record_no")
+    private String recordNo;
+
+    /**
+     * 是否有附件(0 否  1是)
+     */
+    @Column(name = "has_file")
+    private Integer hasFile;
+
+    /**
+     * 是否有urls(0 否  1是)
+     */
+    @Column(name = "has_urls")
+    private Integer hasUrls;
+
+    /**
+     * 附件id
+     */
+    @Column(name = "file_id")
+    private String fileId;
+
+    /**
+     * url id
+     */
+    @Column(name = "urls_id")
+    private String urlsId;
 
     /**
      * 创建时间
@@ -99,14 +129,6 @@ public class WebHookRecord implements Serializable {
         this.callBackUrl = callBackUrl;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public Integer getCallNum() {
         return callNum;
     }
@@ -123,11 +145,79 @@ public class WebHookRecord implements Serializable {
         this.callBackContent = callBackContent;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRecordNo() {
+        return recordNo;
+    }
+
+    public void setRecordNo(String recordNo) {
+        this.recordNo = recordNo;
+    }
+
+    public Integer getHasFile() {
+        return hasFile;
+    }
+
+    public void setHasFile(Integer hasFile) {
+        this.hasFile = hasFile;
+    }
+
+    public Integer getHasUrls() {
+        return hasUrls;
+    }
+
+    public void setHasUrls(Integer hasUrls) {
+        this.hasUrls = hasUrls;
+    }
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getUrlsId() {
+        return urlsId;
+    }
+
+    public void setUrlsId(String urlsId) {
+        this.urlsId = urlsId;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+
+    @Override
+    public String toString() {
+        return "WebHookRecord{" +
+                "id=" + id +
+                ", partnerId=" + partnerId +
+                ", userId=" + userId +
+                ", callBackUrl='" + callBackUrl + '\'' +
+                ", callNum=" + callNum +
+                ", callBackContent='" + callBackContent + '\'' +
+                ", status=" + status +
+                ", recordNo='" + recordNo + '\'' +
+                ", hasFile=" + hasFile +
+                ", hasUrls=" + hasUrls +
+                ", fileId='" + fileId + '\'' +
+                ", urlsId='" + urlsId + '\'' +
+                ", createTime=" + createTime +
+                '}';
     }
 }

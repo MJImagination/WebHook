@@ -22,7 +22,7 @@ public class WebHook implements Serializable {
     private Long id;
 
     /**
-     * 用户所属平台id
+     * 接入者id
      */
     @Column(name="partner_id")
     private Integer partnerId;
@@ -116,5 +116,19 @@ public class WebHook implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+
+    @Override
+    public String toString() {
+        return "WebHook{" +
+                "id=" + id +
+                ", partnerId=" + partnerId +
+                ", userId=" + userId +
+                ", callBackUrl='" + callBackUrl + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", remarks='" + remarks + '\'' +
+                '}';
     }
 }

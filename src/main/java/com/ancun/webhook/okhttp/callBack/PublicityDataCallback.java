@@ -24,9 +24,6 @@ public class PublicityDataCallback implements Callback {
     public void onFailure(Call call, IOException e) {
         if (e instanceof SocketTimeoutException) {
             logger.info("超时异常:{}", e.getMessage());
-//            call.
-//          ((FormBody) ((RealCall) call).originalRequest.body()).encodedValues.String();
-//            call.request().body().;
             Buffer buffer = new Buffer();
             try {
                 call.request().body().writeTo(buffer);
