@@ -30,7 +30,7 @@ public class OKHttpController {
     @ResponseBody
     public String okgo() {
         String url = "http://localhost:8070/echar/getHistogram";
-        for (int j = 0; j < 1; j++) {
+        for (int j = 0; j < 2000; j++) {
             RequestBody body = new FormBody.Builder()
                     .add("key", String.valueOf(j))
                     .build();

@@ -13,5 +13,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface WebHookRecordRepository extends JpaRepository<WebHookRecord,Long> ,JpaSpecificationExecutor<WebHookRecord> {
+    /**
+     * 根据recordNo查找
+     */
+    WebHookRecord findByRecordNo(String recordNo);
 
 }

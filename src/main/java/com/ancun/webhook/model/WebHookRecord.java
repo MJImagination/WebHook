@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- * @Description:
+ * @Description: webhook http请求和mq接受记录表
  * @Author: MJ
  * @Date: Created in 2018/2/4
  */
@@ -52,7 +52,7 @@ public class WebHookRecord implements Serializable {
     private String callBackContent;
 
     /**
-     * 状态(0-失败 1-成功 )
+     * http请求状态状态(3:未请求 0:失败 1:成功 )
      */
     @Column(name = "status")
     private Integer status;
@@ -66,32 +66,70 @@ public class WebHookRecord implements Serializable {
     /**
      * 是否有附件(0 否  1是)
      */
-    @Column(name = "has_file")
-    private Integer hasFile;
+    @Column(name = "has_attach")
+    private Integer hasAttach;
 
     /**
      * 是否有urls(0 否  1是)
      */
-    @Column(name = "has_urls")
-    private Integer hasUrls;
-
-    /**
-     * 附件id
-     */
-    @Column(name = "file_id")
-    private String fileId;
-
-    /**
-     * url id
-     */
-    @Column(name = "urls_id")
-    private String urlsId;
+    @Column(name = "has_url")
+    private Integer hasUrl;
 
     /**
      * 创建时间
      */
     @Column(name="create_time")
     private Date createTime;
+
+    /**
+     * 过期时间
+     */
+    @Column(name = "out_time")
+    private Date outTime;
+
+    /**
+     * 用于判断保全是否完成（1:是   0：否）
+     */
+    @Column(name = "is_complete")
+    private Integer isComplete;
+
+    /**
+     * 用于判断mq清单是否完成（1:是   0：否）
+     */
+    @Column(name = "is_list_complete")
+    private Integer isListComplete;
+
+    /**
+     * 附件id清单
+     */
+    @Column(name = "attach_id_list")
+    private String attachIdList;
+
+    /**
+     * url id
+     */
+    @Column(name = "url_id_list")
+    private String urlIdList;
+
+    /**
+     * 附件id接受字符串用"，"号分隔
+     */
+    @Column(name = "receive_attach_id")
+    private String receiveAttachId;
+
+    /**
+     * url id接受字符串用"，"号分隔
+     */
+    @Column(name = "receive_url_id")
+    private String receiveUrlId;
+
+    public Integer getIsListComplete() {
+        return isListComplete;
+    }
+
+    public void setIsListComplete(Integer isListComplete) {
+        this.isListComplete = isListComplete;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -161,36 +199,20 @@ public class WebHookRecord implements Serializable {
         this.recordNo = recordNo;
     }
 
-    public Integer getHasFile() {
-        return hasFile;
+    public Integer getHasAttach() {
+        return hasAttach;
     }
 
-    public void setHasFile(Integer hasFile) {
-        this.hasFile = hasFile;
+    public void setHasAttach(Integer hasAttach) {
+        this.hasAttach = hasAttach;
     }
 
-    public Integer getHasUrls() {
-        return hasUrls;
+    public Integer getHasUrl() {
+        return hasUrl;
     }
 
-    public void setHasUrls(Integer hasUrls) {
-        this.hasUrls = hasUrls;
-    }
-
-    public String getFileId() {
-        return fileId;
-    }
-
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
-    }
-
-    public String getUrlsId() {
-        return urlsId;
-    }
-
-    public void setUrlsId(String urlsId) {
-        this.urlsId = urlsId;
+    public void setHasUrl(Integer hasUrl) {
+        this.hasUrl = hasUrl;
     }
 
     public Date getCreateTime() {
@@ -201,6 +223,53 @@ public class WebHookRecord implements Serializable {
         this.createTime = createTime;
     }
 
+    public Date getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+
+    public Integer getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(Integer isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    public String getAttachIdList() {
+        return attachIdList;
+    }
+
+    public void setAttachIdList(String attachIdList) {
+        this.attachIdList = attachIdList;
+    }
+
+    public String getUrlIdList() {
+        return urlIdList;
+    }
+
+    public void setUrlIdList(String urlIdList) {
+        this.urlIdList = urlIdList;
+    }
+
+    public String getReceiveAttachId() {
+        return receiveAttachId;
+    }
+
+    public void setReceiveAttachId(String receiveAttachId) {
+        this.receiveAttachId = receiveAttachId;
+    }
+
+    public String getReceiveUrlId() {
+        return receiveUrlId;
+    }
+
+    public void setReceiveUrlId(String receiveUrlId) {
+        this.receiveUrlId = receiveUrlId;
+    }
 
     @Override
     public String toString() {
@@ -213,11 +282,15 @@ public class WebHookRecord implements Serializable {
                 ", callBackContent='" + callBackContent + '\'' +
                 ", status=" + status +
                 ", recordNo='" + recordNo + '\'' +
-                ", hasFile=" + hasFile +
-                ", hasUrls=" + hasUrls +
-                ", fileId='" + fileId + '\'' +
-                ", urlsId='" + urlsId + '\'' +
+                ", hasAttach=" + hasAttach +
+                ", hasUrl=" + hasUrl +
                 ", createTime=" + createTime +
+                ", outTime=" + outTime +
+                ", isComplete=" + isComplete +
+                ", attachIdList='" + attachIdList + '\'' +
+                ", urlIdList='" + urlIdList + '\'' +
+                ", receiveAttachId='" + receiveAttachId + '\'' +
+                ", receiveUrlId='" + receiveUrlId + '\'' +
                 '}';
     }
 }

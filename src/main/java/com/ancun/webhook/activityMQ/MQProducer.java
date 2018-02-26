@@ -1,5 +1,7 @@
 package com.ancun.webhook.activityMQ;
 
+import com.ancun.webhook.model.WebHook;
+import com.ancun.webhook.model.WebHookRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,16 @@ public class MQProducer implements CommandLineRunner {
 
     @Resource(name = "Second_Queue")
     private Queue Second_Queue;
+
+    @Resource(name = "BPS_PRESERVE_MAIN_CALL_BACK_QUEUE")
+    private Queue BPS_PRESERVE_MAIN_CALL_BACK_QUEUE;
+
+    @Resource(name = "BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE")
+    private Queue BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE;
+
+
+    @Resource(name = "BPS_PRESERVE_URL_CALL_BACK_QUEUE")
+    private Queue BPS_PRESERVE_URL_CALL_BACK_QUEUE;
   
     @Override  
     public void run(String... strings) throws Exception {  
@@ -43,8 +55,25 @@ public class MQProducer implements CommandLineRunner {
     public void send2(String msg) {
         this.jmsMessagingTemplate.convertAndSend(this.Second_Queue, msg);
     }
-    /*动态定义消息队列名*/
-    public void sendMessage(Destination destination, final String message){
-        jmsMessagingTemplate.convertAndSend(destination, message);
+
+    public void send3(BpsPreserveMainCallBack bpsPreserveMainCallBack) {
+        this.jmsMessagingTemplate.convertAndSend(this.BPS_PRESERVE_MAIN_CALL_BACK_QUEUE, bpsPreserveMainCallBack);
+    }
+//    /*动态定义消息队列名*/
+//    public void sendMessage(Destination destination, final String message){
+//        jmsMessagingTemplate.convertAndSend(destination, message);
+//    }
+
+//    /*动态定义消息队列名*/
+//    public void sendMessage2(Destination destination, final String message){
+//        jmsMessagingTemplate.convertAndSend(destination, message);
+//    }
+
+    public void attachProducer(BpsPreserveAttachCallBack bpsPreserveAttachCallBack) {
+        this.jmsMessagingTemplate.convertAndSend(this.BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE, bpsPreserveAttachCallBack);
+    }
+
+    public void urlProducer(BpsPreserveUrlCallBack bpsPreserveUrlCallBack) {
+        this.jmsMessagingTemplate.convertAndSend(this.BPS_PRESERVE_URL_CALL_BACK_QUEUE, bpsPreserveUrlCallBack);
     }
 }  

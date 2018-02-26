@@ -38,7 +38,7 @@ public interface WebHookService {
      * @param id
      * @return
      */
-    WebHook findOneById(Long id);
+    WebHook findOneById(Long id, Integer status);
 
 
     /**

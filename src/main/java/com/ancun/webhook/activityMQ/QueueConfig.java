@@ -23,4 +23,19 @@ public class QueueConfig {
     public Destination Second_Queue() {
         return new ActiveMQQueue(QueueName.Second_Queue);
     }
+
+    @Bean(name = "BPS_PRESERVE_MAIN_CALL_BACK_QUEUE")
+    public Destination callBack() {
+        return new ActiveMQQueue(QueueName.BPS_PRESERVE_MAIN_CALL_BACK_QUEUE);
+    }
+
+    @Bean(name = "BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE")
+    public Destination attach_Queue() {
+        return new ActiveMQQueue(QueueName.BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE);
+    }
+
+    @Bean(name = "BPS_PRESERVE_URL_CALL_BACK_QUEUE")
+    public Destination url_Queue() {
+        return new ActiveMQQueue(QueueName.BPS_PRESERVE_URL_CALL_BACK_QUEUE);
+    }
 }  

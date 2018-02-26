@@ -21,17 +21,17 @@ import java.util.Optional;
 @Service
 public class WebHookRecordServiceImpl implements WebHookRecordService {
     @Autowired
-    private WebHookRecordRepository publicityDataRepository;
+    private WebHookRecordRepository webHookRecordRepository;
 
     @Override
     public WebHookRecord createdWebHookRecord(WebHookRecord publicityData) {
-        return publicityDataRepository.save(publicityData);
+        return webHookRecordRepository.save(publicityData);
     }
 
     @Override
     public boolean deleteById(Long id) {
         try {
-            publicityDataRepository.deleteById(id);
+            webHookRecordRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;
@@ -41,14 +41,14 @@ public class WebHookRecordServiceImpl implements WebHookRecordService {
     @Override
     public WebHookRecord updateWebHookRecord(WebHookRecord publicityData) {
         if (publicityData.getId() != null) {
-            return publicityDataRepository.saveAndFlush(publicityData);
+            return webHookRecordRepository.saveAndFlush(publicityData);
         }
         return null;
     }
 
     @Override
     public WebHookRecord findOneById(Long id) {
-        Optional<WebHookRecord> publicityData = publicityDataRepository.findById(id);
+        Optional<WebHookRecord> publicityData = webHookRecordRepository.findById(id);
         if (publicityData.isPresent()) {
             return publicityData.get();
         }
@@ -58,7 +58,13 @@ public class WebHookRecordServiceImpl implements WebHookRecordService {
     @Override
     public Page<WebHookRecord> findPageList(Pageable pageable, WebHookRecord publicityData, JPATimeVO jpaTimeVO
             , LinkedHashMap<String, String> orders) {
-        return publicityDataRepository.findAll(JPAUtil.getSpecificationByObj(publicityData, null
+        return webHookRecordRepository.findAll(JPAUtil.getSpecificationByObj(publicityData, null
                 , jpaTimeVO, orders), pageable);
+    }
+
+    @Override
+    public WebHookRecord findByRecordNo(String recordNo) {
+
+        return webHookRecordRepository.findByRecordNo(recordNo);
     }
 }

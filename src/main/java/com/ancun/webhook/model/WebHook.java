@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @Date: Created in 2018/2/4
  */
 @Entity
-@Table(name="web_hook")
+@Table(name = "web_hook")
 public class WebHook implements Serializable {
     private static final long serialVersionUID = 1665027674223026301L;
     /**
@@ -24,38 +24,41 @@ public class WebHook implements Serializable {
     /**
      * 接入者id
      */
-    @Column(name="partner_id")
+    @Column(name = "partner_id")
     private Integer partnerId;
 
-    /**
-     * 用户id
-     */
-    @Column(name="user_id")
-    private Integer userId;
 
     /**
      * 回调地址
      */
-    @Column(name="call_back_url")
+    @Column(name = "call_back_url")
     private String callBackUrl;
 
     /**
      * 状态(1启用,0关闭)
      */
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 
     /**
      * 创建时间
      */
-    @Column(name="create_time")
+    @Column(name = "create_time")
     private Date createTime;
 
     /**
      * 备注
      */
-    @Column(name="remarks")
+    @Column(name = "remarks")
     private String remarks;
+
+//    /**
+//     * 过期时间
+//     */
+//    private long outTime;
+
+    //redis中的key
+    private String redisKey;
 
 
     public static long getSerialVersionUID() {
@@ -76,14 +79,6 @@ public class WebHook implements Serializable {
 
     public void setPartnerId(Integer partnerId) {
         this.partnerId = partnerId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getCallBackUrl() {
@@ -118,17 +113,32 @@ public class WebHook implements Serializable {
         this.remarks = remarks;
     }
 
+    public String getRedisKey() {
+        return redisKey;
+    }
+
+    public void setRedisKey(String redisKey) {
+        this.redisKey = redisKey;
+    }
+
+//    public long getOutTime() {
+//        return outTime;
+//    }
+//
+//    public void setOutTime(long outTime) {
+//        this.outTime = outTime;
+//    }
 
     @Override
     public String toString() {
         return "WebHook{" +
                 "id=" + id +
                 ", partnerId=" + partnerId +
-                ", userId=" + userId +
                 ", callBackUrl='" + callBackUrl + '\'' +
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", remarks='" + remarks + '\'' +
+                ", redisKey='" + redisKey + '\'' +
                 '}';
     }
 }

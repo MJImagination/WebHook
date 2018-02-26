@@ -5,8 +5,10 @@ import com.ancun.webhook.base.PageContent;
 import com.ancun.webhook.base.RespBody;
 import com.ancun.webhook.base.RespBodyLayUi;
 import com.ancun.webhook.model.PublicityData;
+import com.ancun.webhook.model.WebHook;
 import com.ancun.webhook.repository.PublicityDataRepository;
 import com.ancun.webhook.service.PublicityDataService;
+import com.ancun.webhook.service.impl.WebHookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +37,10 @@ public class PublicityDataController {
 
     @Autowired
     private PublicityDataRepository publicityDataRepository;
+
+
+    @Autowired
+    private WebHookServiceImpl webHookService;
 
     //最新备案
     @ResponseBody
@@ -85,10 +91,33 @@ public class PublicityDataController {
 
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public RespBody<PublicityData> save(PageContent page, @Valid @ModelAttribute PublicityData publicityData) {
-        publicityData =  publicityDataService.createdPublicityData(publicityData);
-        return new RespBody<>(publicityData);
+    public RespBody<WebHook> save(PageContent page, @Valid @ModelAttribute WebHook webHook) {
+        return new RespBody<>(webHookService.createdWebHook(webHook));
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/find", method = RequestMethod.POST)
+    public RespBody<WebHook> find(PageContent page, @Valid @ModelAttribute WebHook webHook) {
+        return new RespBody<>(webHookService.findOneById(Long.valueOf(webHook.getId()), webHook.getStatus()));
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public RespBody<WebHook> delete(PageContent page, @Valid @ModelAttribute WebHook webHook) {
+        webHookService.deleteById(Long.valueOf(webHook.getId()));
+        return new RespBody<>();
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public RespBody<WebHook> update(PageContent page, @Valid @ModelAttribute WebHook webHook) {
+        webHookService.updateWebHook(webHook);
+        return new RespBody<>();
+    }
+
 
 
 

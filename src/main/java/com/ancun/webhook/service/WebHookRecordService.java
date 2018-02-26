@@ -47,4 +47,10 @@ public interface WebHookRecordService {
      */
     Page<WebHookRecord> findPageList(Pageable pageable, WebHookRecord webHookRecord, JPATimeVO jpaTimeVO,
                                      LinkedHashMap<String, String> orders);
+
+
+    /**
+     * 根据recordNo查找
+     */
+    WebHookRecord findByRecordNo(String recordNo);
 }
