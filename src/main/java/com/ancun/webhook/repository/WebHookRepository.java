@@ -24,4 +24,13 @@ public interface WebHookRepository extends JpaRepository<WebHook,Long> ,JpaSpeci
      */
     List<WebHook> findAllByStatus(Integer status);
 
+    /**
+     * 通过PartnerIdAndCallBackUrl查找
+     *
+     * @param id
+     * @param callBackUrl
+     * @return
+     */
+    WebHook findByPartnerIdAndCallBackUrl(int id, String callBackUrl);
+
 }

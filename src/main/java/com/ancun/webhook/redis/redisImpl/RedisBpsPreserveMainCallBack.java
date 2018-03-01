@@ -151,11 +151,9 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
         System.out.println(hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId)));
         String url = hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId));
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(webHookResult));
-//        RequestBody body = new FormBody.Builder()
-//                .add("key", "df")
-//                .build();
         Request request = new Request.Builder()
                 .url(url)
+                .header("recordNo", webHookResult.getRecordNo())
                 .post(body)
                 .build();
         Call call = okHttpClient.newCall(request);

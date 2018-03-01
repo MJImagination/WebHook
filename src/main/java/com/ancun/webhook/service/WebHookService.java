@@ -49,6 +49,13 @@ public interface WebHookService {
     Page<WebHook> findPageList(Pageable pageable, WebHook webHook, JPATimeVO jpaTimeVO,
                                      LinkedHashMap<String, String> orders);
 
-
+    /**
+     * 通过status查找所有
+     *
+     * @param status
+     * @return
+     */
     List<WebHook> findAllWebHook(Integer status);
+
+
 }

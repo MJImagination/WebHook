@@ -1,6 +1,5 @@
 package com.ancun.webhook.configuration;
 
-import com.ancun.webhook.activityMQ.MQConsumer;
 import com.ancun.webhook.enums.WebHookEnum;
 import com.ancun.webhook.model.WebHook;
 import com.ancun.webhook.redis.redisImpl.RedisWebHook;

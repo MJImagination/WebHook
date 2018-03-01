@@ -1,9 +1,12 @@
 package com.ancun.webhook.okhttp.Interceptor;
 
+import com.ancun.webhook.model.WebHookRecord;
+import com.ancun.webhook.okhttp.callBack.WebHookDataCallback;
+import com.ancun.webhook.service.WebHookRecordService;
 import okhttp3.*;
-import okhttp3.internal.http.RealInterceptorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +20,8 @@ import java.net.SocketTimeoutException;
  * @Date: Created in 2018/2/4
  */
 @Component
-public class RetryInterceptor implements Interceptor {
-    private static final Logger logger = LoggerFactory.getLogger(RetryInterceptor.class);
+public class WebHookRetryInterceptor implements Interceptor {
+    private static final Logger logger = LoggerFactory.getLogger(WebHookRetryInterceptor.class);
 
     @Value("${okhttp.MAX_RETRY:3}")
     private int MAX_RETRY;  //最大重试次数
@@ -29,19 +32,19 @@ public class RetryInterceptor implements Interceptor {
     @Value("${okhttp.INCREASE_DELY:2000}")
     private long INCREASE_DELY;   //叠加延迟
 
-    public RetryInterceptor() {
+    public WebHookRetryInterceptor() {
     }
 
-    public RetryInterceptor(int maxRetry) {
+    public WebHookRetryInterceptor(int maxRetry) {
         this.MAX_RETRY = maxRetry;
     }
 
-    public RetryInterceptor(int maxRetry, long delay) {
+    public WebHookRetryInterceptor(int maxRetry, long delay) {
         this.MAX_RETRY = maxRetry;
         this.DELAY = delay;
     }
 
-    public RetryInterceptor(int maxRetry, long delay, long increaseDelay) {
+    public WebHookRetryInterceptor(int maxRetry, long delay, long increaseDelay) {
         this.MAX_RETRY = maxRetry;
         this.DELAY = delay;
         this.INCREASE_DELY = increaseDelay;
@@ -52,16 +55,13 @@ public class RetryInterceptor implements Interceptor {
         logger.info("ThreadId = {}",
                 Thread.currentThread().getId());
         RetryWrapper retryWrapper = proceed(chain);
-
         while (retryWrapper.isNeedReTry()) {
             retryWrapper.retryNum++;
             String sdfsdf = retryWrapper.request().url().toString();
 
             logger.info("尝试重发 : ThreadId = {} , 第{}次重发 body = {}",
                     Thread.currentThread().getId(),
-//                    chain.request().body().writeTo();
-
-                    retryWrapper.retryNum, /*((FormBody) retryWrapper.request.body()).encodedValue(0)*/"zzzzzz");
+                    retryWrapper.retryNum, retryWrapper.request());
             try {
                 Thread.sleep(DELAY + (retryWrapper.retryNum - 1) * INCREASE_DELY);
             } catch (InterruptedException e) {

@@ -1,6 +1,6 @@
 package com.ancun.webhook.okhttp.configuration;
 
-import com.ancun.webhook.okhttp.Interceptor.RetryInterceptor;
+import com.ancun.webhook.okhttp.Interceptor.WebHookRetryInterceptor;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class OkhttpConfiguration {
     @Autowired
     private Dispatcher dispatcher;
     @Autowired
-    private RetryInterceptor retryInterceptor;
+    private WebHookRetryInterceptor webHookRetryInterceptor;
 
     @Bean
     public OkHttpClient initClient() {
@@ -55,7 +55,7 @@ public class OkhttpConfiguration {
                 .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(WRITE_TIMEOUT,TimeUnit.SECONDS)
                 .dispatcher(dispatcher)
-                .addInterceptor(retryInterceptor)//失败重试
+                .addInterceptor(webHookRetryInterceptor)//失败重试
                 .build();
         return okHttpClient;
     }
