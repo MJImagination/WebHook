@@ -1,14 +1,17 @@
 package com.ancun.webhook.redis.redisImpl;
 
 
-import com.ancun.webhook.activityMQ.BpsPreserveAttachCallBack;
-import com.ancun.webhook.activityMQ.BpsPreserveMainCallBack;
-import com.ancun.webhook.activityMQ.BpsPreserveUrlCallBack;
-import com.ancun.webhook.model.WebHook;
+import com.alibaba.fastjson.JSON;
+import com.ancun.bps.preserve.common.domain.BpsPreserveAttachCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveMainCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveUrlCallBack;
+import com.ancun.dto.WebHookResult;
 import com.ancun.webhook.model.WebHookRecord;
+import com.ancun.webhook.okhttp.callBack.WebHookDataCallback;
 import com.ancun.webhook.redis.AbstractRedisBase;
 import com.ancun.webhook.redis.TimeRange;
 import com.ancun.webhook.service.WebHookRecordService;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +19,8 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Description:
@@ -28,15 +29,20 @@ import java.util.Set;
  */
 @Service
 public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveMainCallBack> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisBpsPreserveMainCallBack.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisBpsPreserveMainCallBack.class);
 
     @Resource(name = "hashOperations")
     private HashOperations<String, String, TimeRange> timeRangeHashOperations;
     @Resource(name = "hashOperations")
     private HashOperations<String, String, Object> hashOperations;
+    @Resource(name = "hashOperations")
+    private HashOperations<String, String, String> hashOperationsString;
     @Autowired
     private WebHookRecordService webHookRecordService;
+    @Autowired
+    private OkHttpClient okHttpClient;
 
+    private static final String webHookRedisKey = "webHook";
 
     /**
      * 过期时间扫描
@@ -66,8 +72,12 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
                                 attachList.add(bpsPreserveAttachCallBack.getOsKey());
                             }
                         }
-                        webHookRecord.setReceiveUrlId(urlList.toString());
-                        webHookRecord.setReceiveAttachId(attachList.toString());
+                        if (urlList.size() > 0) {
+                            webHookRecord.setReceiveUrlId(urlList.toString());
+                        }
+                        if (attachList.size() > 0) {
+                            webHookRecord.setReceiveAttachId(attachList.toString());
+                        }
                         webHookRecordService.updateWebHookRecord(webHookRecord);
                     }
                     super.redisTemplate.delete(key);
@@ -103,6 +113,7 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
              * 判断是否完成
              */
             if (hashKeyAllCount - 2 == (attachSize + urlSize)) {
+                //删除reids并更新至数据库
                 webHookRecord = webHookRecordService.findByRecordNo(bpsPreserveMainCallBack.getRecordNo());
                 webHookRecord.setIsComplete(1);
                 if (bpsPreserveMainCallBack.getOsKeyList() != null) {
@@ -114,10 +125,40 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
                 webHookRecord.setIsComplete(1);
                 webHookRecordService.updateWebHookRecord(webHookRecord);
                 super.redisTemplate.delete(redisKey);
+
+                //发送请求
+                WebHookResult webHookResult = new WebHookResult();
+                webHookResult.setComplete(true);
+                webHookResult.setRecordNo(webHookRecord.getRecordNo());
+                webHookResult.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                ascHttpPost(webHookRecord.getPartnerId(), webHookResult);
                 return true;
             }
 
         }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        System.out.println("isSuccess " + simpleDateFormat.format(new Date()));
         return false;
+    }
+
+    /**
+     * 异步post请求
+     *
+     * @param partnerId
+     * @param webHookResult
+     */
+    public void ascHttpPost(long partnerId, WebHookResult webHookResult) {
+        System.out.println(hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId)));
+        String url = hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId));
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(webHookResult));
+//        RequestBody body = new FormBody.Builder()
+//                .add("key", "df")
+//                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new WebHookDataCallback());
     }
 }

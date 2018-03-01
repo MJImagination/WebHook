@@ -8,7 +8,6 @@ package com.ancun.webhook.activityMQ;
 public class QueueName {
     public static final String First_Queue = "First_Queue";
     public static final String Second_Queue = "Second_Queue";
-//    public static final String BPS_PRESERVE_CALL_BACK_QUEUE = "bps.preserve.callback.queue";
 
     /**
      * 主体数据清单

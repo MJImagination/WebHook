@@ -6,7 +6,6 @@ import java.net.SocketTimeoutException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.Response;
 import okio.Buffer;
 import org.slf4j.Logger;
@@ -17,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * @Author: MJ
  * @Date: Created in 2018/2/1
  */
-public class PublicityDataCallback implements Callback {
-    public static final Logger logger = LoggerFactory.getLogger(PublicityDataCallback.class);
+public class WebHookDataCallback implements Callback {
+    public static final Logger logger = LoggerFactory.getLogger(WebHookDataCallback.class);
 
     @Override
     public void onFailure(Call call, IOException e) {
@@ -27,7 +26,6 @@ public class PublicityDataCallback implements Callback {
             Buffer buffer = new Buffer();
             try {
                 call.request().body().writeTo(buffer);
-//                call.
             } catch (IOException e1) {
                 e1.printStackTrace();
             } finally {

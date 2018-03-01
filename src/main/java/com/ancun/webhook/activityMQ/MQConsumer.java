@@ -1,13 +1,14 @@
 package com.ancun.webhook.activityMQ;
 
+import com.ancun.bps.preserve.common.domain.BpsPreserveAttachCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveMainCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveUrlCallBack;
 import com.ancun.webhook.model.WebHookRecord;
-import com.ancun.webhook.okhttp.callBack.PublicityDataCallback;
 import com.ancun.webhook.redis.TimeRange;
 import com.ancun.webhook.redis.redisImpl.RedisBpsPreserveAttachCallBack;
 import com.ancun.webhook.redis.redisImpl.RedisBpsPreserveMainCallBack;
 import com.ancun.webhook.redis.redisImpl.RedisBpsPreserveUrlCallBack;
 import com.ancun.webhook.redis.redisImpl.ReidisTimeRange;
-import com.ancun.webhook.repository.WebHookRecordRepository;
 import com.ancun.webhook.service.WebHookRecordService;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -42,14 +44,15 @@ public class MQConsumer {
 
     /**
      * BpsPreserveMainCallBack consumer
-     * concurrency 动态线程数 1-10
+     * concurrency 动态线程数 1-10 多消费者
      *
      * @param bpsPreserveMainCallBack
      */
     @JmsListener(destination = QueueName.BPS_PRESERVE_MAIN_CALL_BACK_QUEUE, concurrency = "1-10")
     public void receivedQueue3(BpsPreserveMainCallBack bpsPreserveMainCallBack) {
         LOGGER.info("MQ Has received from " + QueueName.BPS_PRESERVE_MAIN_CALL_BACK_QUEUE + ", msg: " + bpsPreserveMainCallBack);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        System.out.println("main start" + simpleDateFormat.format(new Date()));
         //过期时间
         TimeRange timeRange = new TimeRange();
         timeRange.setOutTime(new Date().getTime() + (long) new Random().nextInt(8000) + 3000);
@@ -98,6 +101,8 @@ public class MQConsumer {
             if (bpsPreserveMainCallBack.getHasAttach() && bpsPreserveMainCallBack.getOsKeyList() != null) {     //有附件，
                 webHookRecord.setAttachIdList(bpsPreserveMainCallBack.getOsKeyList().toString());
                 webHookRecord.setHasAttach(1);
+                //url由于发送发无法判断，用到的少，暂时考虑一种情况。有附件，直接判定清单是完整的
+                webHookRecord.setIsListComplete(1);
                 if (bpsPreserveMainCallBack.getSentCaptureList() != null) {
                     webHookRecord.setIsListComplete(1);
                     webHookRecord.setAttachIdList(bpsPreserveMainCallBack.getOsKeyList().toString());
@@ -117,30 +122,23 @@ public class MQConsumer {
             webHookRecordService.createdWebHookRecord(webHookRecord);
         }
 
+        System.out.println("main end" + simpleDateFormat.format(new Date()));
 
-        // 发送http请求
-//        if (redisBpsPreserveMainCallBack.isSuccess(tempRedisKey)) {
-//            //发送请求
-//            String url = "http://localhost:8070/echar/getHistogram";
-//            RequestBody body = new FormBody.Builder()
-//                    .add("key", bpsPreserveMainCallBack.getRecordNo())
-//                    .build();
-//            Request request = new Request.Builder()
-//                    .url(url)
-//                    .post(body)
-//                    .build();
-//            Call call = okHttpClient.newCall(request);
-//            call.enqueue(new PublicityDataCallback());
-//        }
     }
 
-    @JmsListener(destination = QueueName.BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE)
+    /**
+     * BpsPreserveAttachCallBack consumer
+     * concurrency 动态线程数 1-10 多消费者
+     *
+     * @param bpsPreserveAttachCallBack
+     */
+    @JmsListener(destination = QueueName.BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE, concurrency = "1-10")
     public void attachConsumer(BpsPreserveAttachCallBack bpsPreserveAttachCallBack) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        System.out.println("attach start" + simpleDateFormat.format(new Date()));
         //缓存到redis
         String tempRedisKey = "webhookKey" + "_" + bpsPreserveAttachCallBack.getRecordNo();
         redisBpsPreserveAttachCallBack.put(tempRedisKey, "attach" + bpsPreserveAttachCallBack.getOsKey(), bpsPreserveAttachCallBack, -1);
-//        LOGGER.error(redisBpsPreserveMainCallBack.get(tempRedisKey,"mainCallBackKey").toString());
-
         redisBpsPreserveMainCallBack.isSuccess(tempRedisKey);
         LOGGER.info("attachConsumer Has received from " + QueueName.Second_Queue + ", msg: " + bpsPreserveAttachCallBack);
 
@@ -148,12 +146,19 @@ public class MQConsumer {
     }
 
 
-    @JmsListener(destination = QueueName.BPS_PRESERVE_URL_CALL_BACK_QUEUE)
+    /**
+     * BpsPreserveUrlCallBack consumer
+     * concurrency 动态线程数 1-10 多消费者
+     *
+     * @param bpsPreserveUrlCallBack
+     */
+    @JmsListener(destination = QueueName.BPS_PRESERVE_URL_CALL_BACK_QUEUE, concurrency = "1-10")
     public void urlConsumer(BpsPreserveUrlCallBack bpsPreserveUrlCallBack) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        System.out.println("url start" + simpleDateFormat.format(new Date()));
         //缓存到redis
         String tempRedisKey = "webhookKey" + "_" + bpsPreserveUrlCallBack.getRecordNo();
         redisBpsPreserveUrlCallBack.put(tempRedisKey, "url" + bpsPreserveUrlCallBack.getUrl(), bpsPreserveUrlCallBack, -1);
-//        LOGGER.error(redisBpsPreserveMainCallBack.get(tempRedisKey,"mainCallBackKey").toString());
         redisBpsPreserveMainCallBack.isSuccess(tempRedisKey);
         LOGGER.info("urlConsumer Has received from " + QueueName.Second_Queue + ", msg: " + bpsPreserveUrlCallBack);
     }

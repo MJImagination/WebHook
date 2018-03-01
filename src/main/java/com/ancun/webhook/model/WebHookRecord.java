@@ -78,13 +78,13 @@ public class WebHookRecord implements Serializable {
     /**
      * 创建时间
      */
-    @Column(name="create_time")
+    @Column(name = "create_time", columnDefinition = "timestamp")
     private Date createTime;
 
     /**
      * 过期时间
      */
-    @Column(name = "out_time")
+    @Column(name = "out_time", columnDefinition = "timestamp")
     private Date outTime;
 
     /**
@@ -102,25 +102,25 @@ public class WebHookRecord implements Serializable {
     /**
      * 附件id清单
      */
-    @Column(name = "attach_id_list")
+    @Column(name = "attach_id_list", columnDefinition = "longtext")
     private String attachIdList;
 
     /**
      * url id
      */
-    @Column(name = "url_id_list")
+    @Column(name = "url_id_list", columnDefinition = "longtext")
     private String urlIdList;
 
     /**
      * 附件id接受字符串用"，"号分隔
      */
-    @Column(name = "receive_attach_id")
+    @Column(name = "receive_attach_id", columnDefinition = "longtext")
     private String receiveAttachId;
 
     /**
      * url id接受字符串用"，"号分隔
      */
-    @Column(name = "receive_url_id")
+    @Column(name = "receive_url_id", columnDefinition = "longtext")
     private String receiveUrlId;
 
     public Integer getIsListComplete() {

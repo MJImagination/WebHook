@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @Description:
@@ -38,7 +39,7 @@ public interface WebHookService {
      * @param id
      * @return
      */
-    WebHook findOneById(Long id, Integer status);
+    WebHook findOneById(Long id);
 
 
     /**
@@ -47,4 +48,7 @@ public interface WebHookService {
      */
     Page<WebHook> findPageList(Pageable pageable, WebHook webHook, JPATimeVO jpaTimeVO,
                                      LinkedHashMap<String, String> orders);
+
+
+    List<WebHook> findAllWebHook(Integer status);
 }

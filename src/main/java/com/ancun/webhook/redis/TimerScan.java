@@ -1,7 +1,14 @@
 package com.ancun.webhook.redis;
 
 
+import com.ancun.webhook.Aop.SavePublicityAspect;
+import com.ancun.webhook.model.WebHook;
+import com.ancun.webhook.model.WebHookRecord;
 import com.ancun.webhook.redis.redisImpl.RedisBpsPreserveMainCallBack;
+import com.ancun.webhook.service.WebHookRecordService;
+import com.ancun.webhook.service.WebHookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,14 +20,26 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TimerScan {
+    public static final Logger logger = LoggerFactory.getLogger(TimerScan.class);
     @Autowired
     private RedisBpsPreserveMainCallBack redisBpsPreserveMainCallBack;
+    @Autowired
+    private WebHookService webHookService;
 
-
-    @Scheduled(cron = "0/3 * *  * * ?")
+    @Scheduled(cron = "0/10 * *  * * ?")
     public void scanRedis() {
-//        webHookRedisServiceImpl2.getAll();
         redisBpsPreserveMainCallBack.OutTimeScan();
+    }
+
+
+    //    @Scheduled(cron = "0/10 * *  * * ?")
+    public void create() {
+//        webHookRedisServiceImpl2.getAll();
+        WebHook webHook = new WebHook();
+        webHook.setRedisKey("fdsf");
+        WebHook webHook1 = webHookService.createdWebHook(webHook);
+        logger.info("************创建表成功" + webHook1);
+
     }
 
     /*第一次10秒后执行，当执行完后2秒再执行*/

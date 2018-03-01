@@ -1,9 +1,7 @@
 package com.ancun.webhook.okhttp.Interceptor;
 
-import okhttp3.FormBody;
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
+import okhttp3.internal.http.RealInterceptorChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,10 +55,13 @@ public class RetryInterceptor implements Interceptor {
 
         while (retryWrapper.isNeedReTry()) {
             retryWrapper.retryNum++;
+            String sdfsdf = retryWrapper.request().url().toString();
 
             logger.info("尝试重发 : ThreadId = {} , 第{}次重发 body = {}",
                     Thread.currentThread().getId(),
-                    retryWrapper.retryNum, ((FormBody) retryWrapper.request.body()).encodedValue(0));
+//                    chain.request().body().writeTo();
+
+                    retryWrapper.retryNum, /*((FormBody) retryWrapper.request.body()).encodedValue(0)*/"zzzzzz");
             try {
                 Thread.sleep(DELAY + (retryWrapper.retryNum - 1) * INCREASE_DELY);
             } catch (InterruptedException e) {
@@ -85,9 +86,7 @@ public class RetryInterceptor implements Interceptor {
             Response response = chain.proceed(request);
             retryWrapper.setResponse(response);
         } catch (SocketException e) {
-//            logger.info("proceed SocketException {}",e.getMessage());
         } catch (SocketTimeoutException e) {
-//            logger.info("proceed SocketTimeoutException {}",e.getMessage());
         }
     }
 

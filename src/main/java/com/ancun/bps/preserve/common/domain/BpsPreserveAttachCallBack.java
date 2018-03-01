@@ -1,4 +1,4 @@
-package com.ancun.webhook.activityMQ;
+package com.ancun.bps.preserve.common.domain;
 
 import java.io.Serializable;
 

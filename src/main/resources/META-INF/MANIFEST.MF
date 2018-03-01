@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Class-Path: geronimo-jta_1.0.1B_spec-1.0.1.jar spring-boot-autoconfigu
+ re-2.0.0.M7.jar spring-web-5.0.2.RELEASE.jar jackson-datatype-jdk8-2.
+ 9.2.jar fastjson-1.2.44.jar spring-boot-starter-data-redis-2.0.0.M7.j
+ ar snakeyaml-1.19.jar slf4j-api-1.7.25.jar activemq-client-5.15.2.jar
+  jackson-core-2.9.2.jar geronimo-jms_1.1_spec-1.1.1.jar spring-jms-5.
+ 0.2.RELEASE.jar spring-data-redis-2.0.2.RELEASE.jar spring-data-keyva
+ lue-2.0.2.RELEASE.jar hibernate-validator-6.0.5.Final.jar jandex-2.0.
+ 3.Final.jar logback-core-1.2.3.jar spring-boot-starter-web-2.0.0.M7.j
+ ar spring-aop-5.0.2.RELEASE.jar netty-resolver-4.1.17.Final.jar sprin
+ g-boot-starter-aop-2.0.0.M7.jar reactor-core-3.1.2.RELEASE.jar spring
+ -orm-5.0.2.RELEASE.jar spring-context-5.0.2.RELEASE.jar activemq-pool
+ -5.15.0.jar spring-boot-2.0.0.M7.jar reactive-streams-1.0.1.jar antlr
+ -2.7.7.jar mysql-connector-java-5.1.39.jar spring-boot-starter-2.0.0.
+ M7.jar javax.transaction-api-1.2.jar spring-boot-starter-data-jpa-2.0
+ .0.M7.jar log4j-api-2.10.0.jar lettuce-core-5.0.1.RELEASE.jar geronim
+ o-j2ee-management_1.1_spec-1.0.1.jar hibernate-jpa-2.1-api-1.0.0.Fina
+ l.jar spring-tx-5.0.2.RELEASE.jar jackson-annotations-2.9.0.jar sprin
+ g-beans-5.0.2.RELEASE.jar javax.annotation-api-1.3.1.jar spring-expre
+ ssion-5.0.2.RELEASE.jar spring-jcl-5.0.2.RELEASE.jar spring-boot-star
+ ter-jdbc-2.0.0.M7.jar spring-jdbc-5.0.2.RELEASE.jar jackson-module-pa
+ rameter-names-2.9.2.jar spring-boot-starter-logging-2.0.0.M7.jar log4
+ j-to-slf4j-2.10.0.jar HikariCP-2.7.4.jar classmate-1.3.4.jar dom4j-1.
+ 6.1.jar validation-api-2.0.0.Final.jar okhttp-3.9.1.jar aspectjweaver
+ -1.8.13.jar spring-messaging-5.0.2.RELEASE.jar spring-data-commons-2.
+ 0.2.RELEASE.jar activemq-jms-pool-5.15.2.jar spring-boot-starter-json
+ -2.0.0.M7.jar netty-transport-4.1.17.Final.jar okio-1.13.0.jar tomcat
+ -annotations-api-8.5.23.jar spring-oxm-5.0.2.RELEASE.jar commons-pool
+ 2-2.4.3.jar spring-context-support-5.0.2.RELEASE.jar junit-4.12.jar s
+ pring-boot-starter-tomcat-2.0.0.M7.jar netty-handler-4.1.17.Final.jar
+  jul-to-slf4j-1.7.25.jar hibernate-core-5.2.12.Final.jar hawtbuf-1.11
+ .jar hibernate-commons-annotations-5.0.1.Final.jar jackson-databind-2
+ .9.2.jar tomcat-embed-websocket-8.5.23.jar tomcat-embed-el-8.5.23.jar
+  commons-lang3-3.4.jar spring-core-5.0.2.RELEASE.jar netty-common-4.1
+ .17.Final.jar hamcrest-core-1.3.jar spring-aspects-5.0.2.RELEASE.jar 
+ netty-buffer-4.1.17.Final.jar spring-data-jpa-2.0.2.RELEASE.jar sprin
+ g-webmvc-5.0.2.RELEASE.jar logback-classic-1.2.3.jar netty-codec-4.1.
+ 17.Final.jar jackson-datatype-jsr310-2.9.2.jar tomcat-embed-core-8.5.
+ 23.jar jboss-logging-3.3.1.Final.jar javassist-3.22.0-CR2.jar
+Main-Class: com.ancun.webhook.WebHookManageApplication
+

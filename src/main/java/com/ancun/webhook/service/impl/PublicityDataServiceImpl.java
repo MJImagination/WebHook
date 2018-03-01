@@ -7,7 +7,6 @@ import com.ancun.webhook.repository.PublicityDataRepository;
 import com.ancun.webhook.service.PublicityDataService;
 import com.ancun.webhook.utils.JPAUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -60,7 +59,6 @@ public class PublicityDataServiceImpl implements PublicityDataService {
 
     @Override
 
-    @Cacheable(value = "PublicityDataServiceImpl")
     public Page<PublicityData> findPageList(Pageable pageable, PublicityData publicityData, JPATimeVO jpaTimeVO
             , LinkedHashMap<String, String> orders) {
         return publicityDataRepository.findAll(JPAUtil.getSpecificationByObj(publicityData, null

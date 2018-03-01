@@ -99,7 +99,7 @@ public class PublicityDataController {
     @ResponseBody
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public RespBody<WebHook> find(PageContent page, @Valid @ModelAttribute WebHook webHook) {
-        return new RespBody<>(webHookService.findOneById(Long.valueOf(webHook.getId()), webHook.getStatus()));
+        return new RespBody<>(webHookService.findOneById(Long.valueOf(webHook.getId())));
     }
 
 

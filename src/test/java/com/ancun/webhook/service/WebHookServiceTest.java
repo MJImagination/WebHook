@@ -7,7 +7,6 @@ import com.ancun.webhook.repository.WebHookRepository;
 import com.ancun.webhook.service.impl.WebHookServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Date;
 

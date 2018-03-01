@@ -1,7 +1,8 @@
 package com.ancun.webhook.activityMQ;
 
-import com.ancun.webhook.model.WebHook;
-import com.ancun.webhook.model.WebHookRecord;
+import com.ancun.bps.preserve.common.domain.BpsPreserveAttachCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveMainCallBack;
+import com.ancun.bps.preserve.common.domain.BpsPreserveUrlCallBack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import javax.jms.Destination;
 import javax.jms.Queue;
 
 /**
- * @Description:
+ * @Description: 用于本地测试
  * @Author: MJ
  * @Date: Created in 2018/2/4
  */
@@ -59,15 +60,11 @@ public class MQProducer implements CommandLineRunner {
     public void send3(BpsPreserveMainCallBack bpsPreserveMainCallBack) {
         this.jmsMessagingTemplate.convertAndSend(this.BPS_PRESERVE_MAIN_CALL_BACK_QUEUE, bpsPreserveMainCallBack);
     }
-//    /*动态定义消息队列名*/
-//    public void sendMessage(Destination destination, final String message){
-//        jmsMessagingTemplate.convertAndSend(destination, message);
-//    }
 
-//    /*动态定义消息队列名*/
-//    public void sendMessage2(Destination destination, final String message){
-//        jmsMessagingTemplate.convertAndSend(destination, message);
-//    }
+    /*动态定义消息队列名*/
+    public void sendMessage(Destination destination, final String message) {
+        jmsMessagingTemplate.convertAndSend(destination, message);
+    }
 
     public void attachProducer(BpsPreserveAttachCallBack bpsPreserveAttachCallBack) {
         this.jmsMessagingTemplate.convertAndSend(this.BPS_PRESERVE_ATTACH_CALL_BACK_QUEUE, bpsPreserveAttachCallBack);

@@ -1,11 +1,11 @@
 package com.ancun.webhook;
 
-import com.ancun.webhook.activityMQ.BpsPreserveMainCallBack;
-import com.ancun.webhook.model.WebHook;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -43,14 +43,8 @@ public class MyTest {
 
     @Test
     public void test3() {
-        for (int i = 0; i < 10; i++) {
-            int random = new Random().nextInt(10);
-            if (random % 2 == 0) {
-                System.out.println(random);
-            } else {
-                System.out.println(random + ":" + random % 2);
-            }
-        }
+        List<String> urlList = new ArrayList<>();
+        System.out.println(urlList.size() > 0 ? "yes" : "no");
 
     }
 }
