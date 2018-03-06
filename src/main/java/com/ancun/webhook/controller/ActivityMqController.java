@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @Description:
+ * @Description: 主要用于本地测试
  * @Author: MJ
  * @Date: Created in 2018/2/4
  */
@@ -35,8 +35,6 @@ public class ActivityMqController {
     @ResponseBody
     public String activemq(HttpServletRequest request, String msg) throws InterruptedException {
         msg = StringUtils.isEmpty(msg) ? "This is Empty Msg." : msg;
-
-
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         for (int i = 0; i < 1; i++) {
@@ -113,24 +111,4 @@ public class ActivityMqController {
         return "Activemq has sent OK.";
     }
 
-
-    @GetMapping("/activemq/send2")
-    @ResponseBody
-    public String activemq2(HttpServletRequest request, String msg) {
-        msg = StringUtils.isEmpty(msg) ? "This is Empty Msg." : msg;
-
-
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        for (int i = 0; i < 20; i++) {
-            System.out.println(i);
-            WebHookRecord webHookRecord = new WebHookRecord();
-            webHookRecord.setRecordNo("*****_" + String.valueOf(i));
-            mqProducer.send2("message");
-//            mqProducer.send2(msg + " = " + i);
-        }
-        stopWatch.stop();
-        System.out.println("发送消息耗时: " + stopWatch.getTotalTimeMillis() + "ms");
-        return "Activemq has sent OK.";
-    }
 }

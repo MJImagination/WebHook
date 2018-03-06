@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @PropertySource({"classpath:okhttpConfig.properties", "classpath:activeMQ.properties"})
-@ComponentScan(basePackages = {"com.ancun.webhook", "com.ancun.webhook.okhttp.callBack"})
+@ComponentScan(basePackages = {"com.ancun.webhook"})
 @EnableCaching
 @EnableScheduling
 public class WebHookManageApplication {

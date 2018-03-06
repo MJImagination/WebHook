@@ -53,11 +53,13 @@ public class WebHookDataCallback implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         //spring多线程中，手动获得对象
         this.webHookRecordService = BeanContext.getApplicationContext().getBean(WebHookRecordService.class);
-        logger.info("SUCCESS ！ThreadId:" + Thread.currentThread().getId() + " content：" + response.body().string());
+        //调用String会自动释放内存
+        String responseData = response.body().string();
+        logger.info("SUCCESS ！ThreadId:" + Thread.currentThread().getId() + " content：" + responseData);
         String recordNo = call.request().headers().get("recordNo");
         WebHookRecord webHookRecord = webHookRecordService.findByRecordNo(recordNo);
-        webHookRecord.setStatus(0);
-        webHookRecord.setCallBackContent(response.body().string());
+        webHookRecord.setStatus(1);
+        webHookRecord.setCallBackContent(responseData);
         webHookRecordService.updateWebHookRecord(webHookRecord);
     }
 }

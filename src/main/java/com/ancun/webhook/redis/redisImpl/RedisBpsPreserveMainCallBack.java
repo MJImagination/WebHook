@@ -12,6 +12,7 @@ import com.ancun.webhook.redis.AbstractRedisBase;
 import com.ancun.webhook.redis.TimeRange;
 import com.ancun.webhook.service.WebHookRecordService;
 import okhttp3.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,8 +137,6 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
             }
 
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        System.out.println("isSuccess " + simpleDateFormat.format(new Date()));
         return false;
     }
 
@@ -148,15 +147,18 @@ public class RedisBpsPreserveMainCallBack extends AbstractRedisBase<BpsPreserveM
      * @param webHookResult
      */
     public void ascHttpPost(long partnerId, WebHookResult webHookResult) {
-        System.out.println(hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId)));
         String url = hashOperationsString.get(webHookRedisKey, String.valueOf(partnerId));
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(webHookResult));
-        Request request = new Request.Builder()
-                .url(url)
-                .header("recordNo", webHookResult.getRecordNo())
-                .post(body)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new WebHookDataCallback());
+        if (StringUtils.isNotBlank(url)) {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(webHookResult));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .header("recordNo", webHookResult.getRecordNo())
+                    .post(body)
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new WebHookDataCallback());
+        } else {
+            logger.warn("回调地址为空");
+        }
     }
 }

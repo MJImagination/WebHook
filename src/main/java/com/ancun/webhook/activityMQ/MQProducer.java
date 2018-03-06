@@ -26,12 +26,6 @@ public class MQProducer implements CommandLineRunner {
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
 
-    @Resource(name = "First_Queue")
-    private Queue First_Queue;
-
-    @Resource(name = "Second_Queue")
-    private Queue Second_Queue;
-
     @Resource(name = "BPS_PRESERVE_MAIN_CALL_BACK_QUEUE")
     private Queue BPS_PRESERVE_MAIN_CALL_BACK_QUEUE;
 
@@ -41,20 +35,10 @@ public class MQProducer implements CommandLineRunner {
 
     @Resource(name = "BPS_PRESERVE_URL_CALL_BACK_QUEUE")
     private Queue BPS_PRESERVE_URL_CALL_BACK_QUEUE;
-  
-    @Override  
-    public void run(String... strings) throws Exception {  
-        send("This is a log message.");  
-        LOGGER.info("Log Message was sent to the Queue named sample.log");  
-    }  
 
-    /*发送消息到定义好的队列中*/
-    public void send(String msg) {  
-        this.jmsMessagingTemplate.convertAndSend(this.First_Queue, msg);
-    }
-
-    public void send2(String msg) {
-        this.jmsMessagingTemplate.convertAndSend(this.Second_Queue, msg);
+    @Override
+    public void run(String... strings) throws Exception {
+        LOGGER.info("Log Message was sent to the Queue named sample.log");
     }
 
     public void send3(BpsPreserveMainCallBack bpsPreserveMainCallBack) {

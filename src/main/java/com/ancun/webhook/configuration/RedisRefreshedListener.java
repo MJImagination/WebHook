@@ -46,11 +46,6 @@ public class RedisRefreshedListener implements ApplicationListener<ContextRefres
         if (webHooks != null && webHooks.size() > 0) {
             putALl(webHookRedisKey, webHooks);
         }
-        for (WebHook webHook : webHooks) {
-            System.out.println(redisWebHook.get(webHookRedisKey, String.valueOf(webHook.getPartnerId())));
-        }
-
-
     }
 
     /**

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Description:
+ * @Description: 用于本地压力测试
  * @Author: MJ
  * @Date: Created in 2018/2/4
  */
